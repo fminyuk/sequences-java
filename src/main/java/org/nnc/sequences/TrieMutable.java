@@ -6,8 +6,8 @@ import java.util.Map;
  * Интерфейс дерева ключей (Trie) допускающего модификацию.
  *
  * @param <T> Тип узла дерева.
- * @param <E> Тип элемента ключа.
- * @param <V> Тип значения ключа.
+ * @param <E> Тип символов.
+ * @param <V> Тип значения.
  */
 public interface TrieMutable<T extends TrieMutable<T, E, V>, E, V> extends Trie<E, V> {
     /**
@@ -28,7 +28,7 @@ public interface TrieMutable<T extends TrieMutable<T, E, V>, E, V> extends Trie<
     /**
      * Устанавливает дочерний узел.
      *
-     * @param c Символ.
+     * @param c Символ ключа.
      * @param child Дочерний узел.
      */
     default void setChild(E c, T child){
