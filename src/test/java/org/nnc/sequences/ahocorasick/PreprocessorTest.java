@@ -13,7 +13,7 @@ public class PreprocessorTest {
     @Test(description = "Пустое множество ключей.")
     public void emptySet() {
         final String[] keys = new String[0];
-        final NodeImpl<Character, String> root = createNode (keys);
+        final NodeImpl<Character, String> root = createNode(keys);
 
         assertNotNull(root);
         assertEquals(0, root.getChildren().size());
@@ -25,7 +25,7 @@ public class PreprocessorTest {
     @Test(description = "Пустой ключ.")
     public void emptyKey() {
         final String[] keys = {""};
-        final NodeImpl<Character, String> root = createNode (keys);
+        final NodeImpl<Character, String> root = createNode(keys);
 
         assertNotNull(root);
         assertEquals(0, root.getChildren().size());
@@ -38,7 +38,7 @@ public class PreprocessorTest {
     public void oneChar() {
         final String key = "a";
         final String[] keys = {key};
-        final NodeImpl<Character, String> root = createNode (keys);
+        final NodeImpl<Character, String> root = createNode(keys);
 
         assertNotNull(root);
         assertEquals(1, root.getChildren().size());
@@ -59,7 +59,7 @@ public class PreprocessorTest {
     public void oneComplex() {
         final String key = "aabaac";
         final String[] keys = {key};
-        final NodeImpl<Character, String> root = createNode (keys);
+        final NodeImpl<Character, String> root = createNode(keys);
 
         final List<NodeImpl<Character, String>> nodes = new ArrayList<>();
         nodes.add(root);
@@ -90,7 +90,7 @@ public class PreprocessorTest {
                 "edfabe",
                 "bedfedfabg"
         };
-        final NodeImpl<Character, String> root = createNode (keys);
+        final NodeImpl<Character, String> root = createNode(keys);
 
         // Функции выхода.
         assertTrue(traverse(root).stream().allMatch(n -> n.getOut() == null));
@@ -108,7 +108,7 @@ public class PreprocessorTest {
                 "eabc",
                 "heabc"
         };
-        final NodeImpl<Character, String> root = createNode (keys);
+        final NodeImpl<Character, String> root = createNode(keys);
 
         // Функции выхода.
         assertEquals(getNode(root, "abc"), getNode(root, "eabc").getOut());

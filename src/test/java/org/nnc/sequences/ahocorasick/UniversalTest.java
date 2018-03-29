@@ -100,7 +100,6 @@ public class UniversalTest {
         assertTrue(Arrays.stream(keys).allMatch(success::containsKey));
     }
 
-
     private static Automaton<Character, String> createAutomaton(final String[] keys) {
         final List<Sequence<Character, String>> sequences = Arrays.stream(keys)
                 .map(SequenceFactory::create)

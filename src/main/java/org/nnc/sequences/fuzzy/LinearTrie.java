@@ -3,7 +3,7 @@ package org.nnc.sequences.fuzzy;
 import java.util.List;
 
 /**
- * Дерево ключей (Trie) в линейном виде.
+ * Линейное представление дерева ключей (Trie).
  *
  * @param <E> Тип символов.
  * @param <V> Тип значений.
