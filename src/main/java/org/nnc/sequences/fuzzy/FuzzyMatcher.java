@@ -9,19 +9,26 @@ import java.util.List;
 import java.util.Map;
 
 public class FuzzyMatcher<E, V> {
-    public List<FuzzyMatch<V>> search(Trie<E, V> trie, Automaton<E> levenshtein) {
+    private final Trie<E, V> trie;
+
+    public FuzzyMatcher(Trie<E, V> trie) {
+        this.trie = trie;
+    }
+
+    public List<FuzzyMatch<V>> search(Automaton<E> pattern) {
         final List<FuzzyMatch<V>> matches = new ArrayList<>();
 
-        search(trie, levenshtein, levenshtein.start(), matches);
+        search(trie, pattern, pattern.start(), matches);
 
         return matches;
     }
 
     private void search(Trie<E, V> node, Automaton<E> automaton, AutomatonPointer pointer, List<FuzzyMatch<V>> matches) {
-        if (node.getValue() != null) {
+        final V nodeValue = node.getValue();
+        if (nodeValue != null) {
             final int cost = automaton.cost(pointer);
             if (cost >= 0) {
-                matches.add(new FuzzyMatch<>(node.getValue(), cost));
+                matches.add(new FuzzyMatch<>(nodeValue, cost));
             }
         }
 

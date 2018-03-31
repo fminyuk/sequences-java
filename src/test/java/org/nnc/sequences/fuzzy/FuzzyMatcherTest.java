@@ -29,26 +29,36 @@ public class FuzzyMatcherTest {
                 "abcg",
                 "defg"
         ));
-        final Automaton<Character> levenshtein = levenshtein("abca", 2);
+        final Automaton<Character> pattern = levenshtein("abca", 2);
 
-        final FuzzyMatcher<Character, String> matcher = new FuzzyMatcher<>();
+        final FuzzyMatcher<Character, String> matcher = new FuzzyMatcher<>(trie);
 
-        final List<FuzzyMatch<String>> matches = matcher.search(trie, levenshtein);
+        final List<FuzzyMatch<String>> matches = matcher.search(pattern);
     }
 
-    @Test
+    @Test(enabled = false)
     public void lt() throws Exception {
         final List<String> words = readWords();
+        final Automaton<Character> pattern = levenshtein("проффесор", 2);
+
         final Trie<Character, String> trie = trie(words);
+        final FuzzyMatcher<Character, String> matcher = new FuzzyMatcher<>(trie);
 
-        final FuzzyMatcher<Character, String> matcher = new FuzzyMatcher<>();
-        final Automaton<Character> levenshtein = levenshtein("проффесор", 2);
+        final StopWatch trieStopWatch = StopWatch.createStarted();
+        final List<FuzzyMatch<String>> tmatches = matcher.search(pattern);
+        trieStopWatch.stop();
 
-        final StopWatch stopWatch = StopWatch.createStarted();
-        final List<FuzzyMatch<String>> matches = matcher.search(trie, levenshtein);
-        stopWatch.stop();
+        System.out.println("Trie:   " + trieStopWatch.getNanoTime());
 
-        System.out.println("Time:    " + stopWatch.getNanoTime());
+        final LinearTrieFactory<Character, String> linearTrieFactory = new LinearTrieFactory<>();
+        final LinearTrie<Character, String> linear = linearTrieFactory.create(trie);
+        final LinearFuzzyMatcher<Character, String> lmatcher = new LinearFuzzyMatcher<>(linear);
+
+        final StopWatch linearStopWatch = StopWatch.createStarted();
+        final List<FuzzyMatch<String>> lmatches = lmatcher.search(pattern);
+        linearStopWatch.stop();
+
+        System.out.println("Linear: " + linearStopWatch.getNanoTime());
     }
 
     private static List<String> readWords() throws IOException {
