@@ -31,7 +31,10 @@ public class UniTablesFactoryImpl implements UniTablesFactory {
             }
         }
 
-        return new UniTables(n, start, transitions, cost);
+        // Состояние остановки.
+        final int stop = calcStopState(transitions);
+
+        return new UniTables(n, start, stop, transitions, cost);
     }
 
     private static Map<State, State[]> calcTransitions(final StateCalc calc) {
@@ -62,5 +65,16 @@ public class UniTablesFactoryImpl implements UniTablesFactory {
         }
 
         return state2index;
+    }
+
+    private static int calcStopState(final int[][] transitions) {
+        for (int i = 0; i < transitions.length; i++) {
+            final int s = i;
+            if (Arrays.stream(transitions[i]).allMatch(j -> j == s)) {
+                return s;
+            }
+        }
+
+        throw new IllegalStateException();
     }
 }

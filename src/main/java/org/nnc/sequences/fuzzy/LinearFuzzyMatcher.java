@@ -31,10 +31,12 @@ public class LinearFuzzyMatcher<E, V> {
         }
 
         final int size = 1 + linear.getLens()[pos];
-        int offset = 1;
-        while (offset < size) {
-            final AutomatonPointer next = pattern.next(pointer, linear.getChars().get(pos + offset));
-            offset += search(pos + offset, pattern, next, matches);
+        if(!pattern.isStop(pointer)) {
+            int offset = 1;
+            while (offset < size) {
+                final AutomatonPointer next = pattern.next(pointer, linear.getChars().get(pos + offset));
+                offset += search(pos + offset, pattern, next, matches);
+            }
         }
 
         return size;

@@ -23,18 +23,20 @@ public class FuzzyMatcher<E, V> {
         return matches;
     }
 
-    private void search(Trie<E, V> node, Automaton<E> automaton, AutomatonPointer pointer, List<FuzzyMatch<V>> matches) {
+    private void search(Trie<E, V> node, Automaton<E> pattern, AutomatonPointer pointer, List<FuzzyMatch<V>> matches) {
         final V nodeValue = node.getValue();
         if (nodeValue != null) {
-            final int cost = automaton.cost(pointer);
+            final int cost = pattern.cost(pointer);
             if (cost >= 0) {
                 matches.add(new FuzzyMatch<>(nodeValue, cost));
             }
         }
 
-        for (final Map.Entry<E, ? extends Trie<E, V>> child : node.getChildren().entrySet()) {
-            final AutomatonPointer next = automaton.next(pointer, child.getKey());
-            search(child.getValue(), automaton, next, matches);
+        if(!pattern.isStop(pointer)) {
+            for (final Map.Entry<E, ? extends Trie<E, V>> child : node.getChildren().entrySet()) {
+                final AutomatonPointer next = pattern.next(pointer, child.getKey());
+                search(child.getValue(), pattern, next, matches);
+            }
         }
     }
 }

@@ -6,12 +6,14 @@ package org.nnc.sequences.levenshtein;
 public class UniTables {
     private final int n;
     private final int start;
+    private final int stop;
     private final int[][] transitions;
     private final int[][] cost;
 
-    public UniTables(int n, int start, int[][] transitions, int[][] cost) {
+    public UniTables(int n, int start, int stop, int[][] transitions, int[][] cost) {
         this.n = n;
         this.start = start;
+        this.stop = stop;
         this.transitions = transitions;
         this.cost = cost;
     }
@@ -34,10 +36,29 @@ public class UniTables {
         return start;
     }
 
+    /**
+     * Возвращает индекс состояния остановки.
+     *
+     * @return Индекс состояния остановки.
+     */
+    public int getStop() {
+        return stop;
+    }
+
+    /**
+     * Возвращает таблицу стоимости состояний.
+     *
+     * @return Таблица стоимости состояний.
+     */
     public int[][] getCost() {
         return cost;
     }
 
+    /**
+     * Вовзращает таблицу переходов.
+     *
+     * @return Таблица переходов.
+     */
     public int[][] getTransitions() {
         return transitions;
     }
