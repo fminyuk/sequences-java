@@ -23,6 +23,10 @@ public class Automaton<E> {
         return new AutomatonPointer(uni.getStart(), 0);
     }
 
+    public boolean isStop(AutomatonPointer pointer) {
+        return pointer.getState() == uni.getStop();
+    }
+
     public AutomatonPointer next(final AutomatonPointer pointer, E item) {
         final int z = calcZ(item, pointer.getPosition());
         final int nextState = uni.getTransitions()[pointer.getState()][z];
